@@ -1,0 +1,23 @@
+version: "3"
+
+# Try `docker-compose up`
+
+services:
+    ovpn_proxy:
+        image: jonoh/openvpn-socks
+        cap_add:
+            - NET_ADMIN
+        devices:
+            - /dev/net/tun
+        dns:
+            - 1.1.1.1
+            - 1.0.0.1
+        volumes:
+            - ./config.ovpn:/config/config.ovpn
+        environment:
+            # Create a .env file with these values
+            - OPENVPN_USERNAME=${OPENVPN_USERNAME}
+            - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
+        ports:
+            - 1080:1080
+        restart: always

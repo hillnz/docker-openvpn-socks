@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+
+set -e
+
+TEMP_DIR="$(mktemp -d)"
+
+if [ ! -f "${OPENVPN_CONFIG_FILE}" ] ; then
+    echo "No OpenVPN config. Exiting."
+    exit 1
+fi
+
+# Add ovpn user/pass
+if [ -n "${OPENVPN_USERNAME}" ]; then
+    echo "$OPENVPN_USERNAME" >"${TEMP_DIR}/openvpn-credentials.txt"
+    echo "$OPENVPN_PASSWORD" >>"${TEMP_DIR}/openvpn-credentials.txt"
+    chmod 600 "${TEMP_DIR}/openvpn-credentials.txt"
+
+    grep -v "auth-user-pass" <"${OPENVPN_CONFIG_FILE}" >"${TEMP_DIR}/config.ovpn"
+    echo "auth-user-pass ${TEMP_DIR}/openvpn-credentials.txt" >>"${TEMP_DIR}/config.ovpn"
+fi
+
+if [ ! -f "${TEMP_DIR}/config.ovpn" ]; then
+    cp "${OPENVPN_CONFIG_FILE}" "${TEMP_DIR}/config.ovpn"
+fi
+
+exec openvpn \
+    --config "${TEMP_DIR}/config.ovpn" \
+    --script-security 2 \
+    --up /usr/local/bin/up
