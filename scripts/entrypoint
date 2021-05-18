@@ -23,6 +23,11 @@ if [ ! -f "${TEMP_DIR}/config.ovpn" ]; then
     cp "${OPENVPN_CONFIG_FILE}" "${TEMP_DIR}/config.ovpn"
 fi
 
+# Configure SOCKS port
+# shellcheck disable=SC2016
+envsubst '$SOCKS_PORT' </etc/sockd.conf >/tmp/sockd.conf
+mv /tmp/sockd.conf /etc/sockd.conf
+
 exec openvpn \
     --config "${TEMP_DIR}/config.ovpn" \
     --script-security 2 \
