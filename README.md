@@ -22,7 +22,7 @@ Updates are created when new versions of the upstream image (Alpine) are release
 Pass values for `docker-compose` in `environment` or to `docker run` with `-e "<VAR_NAME>:<value>"`.
 
 | Variable | Default | Example | Description |
-|---|---|---|---|---|
+|---|---|---|---|
 | `OPENVPN_USERNAME` | _none_ | `bob@example.com` | VPN username, if needed |
 | `OPENVPN_PASSWORD` | _none_ | `top-secret-123` | VPN password, if needed |
 | `OPENVPN_CONFIG_FILE` | `/config/config.ovpn` | `/my/path.ovpn` | Path to OpenVPN config file inside container |
