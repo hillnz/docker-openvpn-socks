@@ -34,7 +34,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Build and push
-        id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -55,7 +54,6 @@ jobs:
           fi
 
       - name: Rebuild and push with tags
-        id: docker_build
         if: ${{ github.ref == 'refs/heads/v1' }}
         uses: docker/build-push-action@v2
         with:
