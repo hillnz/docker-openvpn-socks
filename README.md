@@ -26,7 +26,7 @@ Pass values for `docker-compose` in `environment` or to `docker run` with `-e "<
 | `OPENVPN_USERNAME` | _none_ | `bob@example.com` | VPN username, if needed |
 | `OPENVPN_PASSWORD` | _none_ | `top-secret-123` | VPN password, if needed |
 | `OPENVPN_CONFIG_FILE` | `/config/config.ovpn` | `/my/path.ovpn` | Path to OpenVPN config file inside container |
-| `SOCKS_PORT` | `8080` | `1234` | SOCKS proxy listening port |
+| `SOCKS_PORT` | `1080` | `1234` | SOCKS proxy listening port |
 
 ### Mounts
 
