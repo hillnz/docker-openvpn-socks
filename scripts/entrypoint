@@ -28,6 +28,12 @@ fi
 envsubst '$SOCKS_PORT' </etc/sockd.conf >/tmp/sockd.conf
 mv /tmp/sockd.conf /etc/sockd.conf
 
+# Ensure external connections via docker network find their way back
+docker_ip=$(ip addr show eth0 | awk '$1 == "inet" {gsub(/\/.*$/, "", $2); print $2}')
+docker_gw=$(ip route | awk '/default/ {print $3}')
+ip rule add from "$docker_ip" table 10
+ip route add table 10 default via "$docker_gw" table 10
+
 exec openvpn \
     --config "${TEMP_DIR}/config.ovpn" \
     --script-security 2 \
