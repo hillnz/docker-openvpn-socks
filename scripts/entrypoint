@@ -36,5 +36,7 @@ ip route add table 10 default via "$docker_gw" table 10
 
 exec openvpn \
     --config "${TEMP_DIR}/config.ovpn" \
+    --connect-retry-max 1 \
+    --resolv-retry 1 \
     --script-security 2 \
     --up /usr/local/bin/up
