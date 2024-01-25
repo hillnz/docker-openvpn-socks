@@ -1,4 +1,4 @@
-FROM alpine:3.18.5
+FROM alpine:3.19.0
 
 RUN apk --no-cache add \
     dante-server \
